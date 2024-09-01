@@ -12,13 +12,13 @@ const SOURCE_TO_FEE_BPS = {
 
 export async function getEmptyTransaction(account: string): Promise<string> {
   const { blockhash } = await connection.getLatestBlockhash();
-  const transferInstruction = new TransactionInstruction({
+  const transferInstruction = new TransactionInstruction({ // cant use for buffer problem
     keys: [
       { pubkey: new PublicKey(account), isSigner: true, isWritable: true },
-      { pubkey: new PublicKey('X6n2p9QCS2fWEmx1d6bVpRDMBZC82mvKqVyRVJ8qMv5'), isSigner: false, isWritable: true },
+      { pubkey: new PublicKey(account), isSigner: false, isWritable: true },
     ],
     programId: new PublicKey('11111111111111111111111111111111'),
-    data: Buffer.from([2, 0, 0, 0, 232, 3, 0, 0, 0, 0, 0, 0]), //1000 lamport for abuse prevention
+    data: Buffer.from([2, 0, 0, 0, 232, 3, 0, 0, 0, 0, 0, 0]),
   });
   const transaction = new Transaction().add(transferInstruction);
   transaction.recentBlockhash = blockhash;
