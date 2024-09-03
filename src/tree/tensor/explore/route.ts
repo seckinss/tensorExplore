@@ -365,6 +365,9 @@ app.openapi(createRoute({
       }
 
     }
+    if(!collections){
+      collections = (await getCollectionsBy24hVolume()).collections;
+    }
     const collection = collections[Number(index)];
     if (!collection) {
       return c.json(
